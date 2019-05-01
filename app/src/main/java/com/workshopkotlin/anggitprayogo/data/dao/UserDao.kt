@@ -9,7 +9,7 @@ import com.workshopkotlin.anggitprayogo.data.entity.UserEntity
 interface UserDao {
 
     @Insert
-    fun insertUser(user: UserEntity)
+    fun insertUser(user: UserEntity) : Long
 
     @Query("SELECT * FROM users WHERE id_user=:idUser")
     fun getUser(idUser: Int) : UserEntity

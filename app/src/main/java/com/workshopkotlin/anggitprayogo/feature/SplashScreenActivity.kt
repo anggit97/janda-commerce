@@ -4,10 +4,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.workshopkotlin.anggitprayogo.R
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.clearTop
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivity
+import com.workshopkotlin.anggitprayogo.data.sharedpref.SharedprefUtil
+import org.jetbrains.anko.*
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -20,7 +18,16 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun runSplashScreen() {
         Handler().postDelayed({
-            startActivity(intentFor<LoginActivity>().clearTask().clearTop())
+            checkIfUserAlreadyLogin()
         }, 2000)
+    }
+
+    private fun checkIfUserAlreadyLogin() {
+        val isLoggin = SharedprefUtil.isLoggin ?: false
+        if (isLoggin){
+            startActivity(intentFor<MainActivity>().newTask().clearTask())
+        }else{
+            startActivity(intentFor<LoginActivity>().newTask().clearTask())
+        }
     }
 }
