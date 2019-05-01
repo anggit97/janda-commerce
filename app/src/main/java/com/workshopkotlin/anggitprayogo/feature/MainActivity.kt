@@ -9,6 +9,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.workshopkotlin.anggitprayogo.R
 import com.workshopkotlin.anggitprayogo.adapter.MainPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,11 +20,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         handleBottomNavigation()
+
+        onClickListener()
+    }
+
+    private fun onClickListener() {
+        fab_create.setOnClickListener {
+            startActivity<CreateProductActivity>()
+        }
     }
 
     private fun handleBottomNavigation() {
         val item1 = AHBottomNavigationItem("Produk", R.drawable.ic_add_white_24dp, R.color.colorPrimary)
-        val item2 = AHBottomNavigationItem("Dibeli", R.drawable.ic_add_white_24dp, R.color.colorPrimary)
+        val item2 = AHBottomNavigationItem("Dibeli", R.drawable.ic_shopping_cart_black_24dp, R.color.colorPrimary)
 
         bottom_navigation.addItem(item1)
         bottom_navigation.addItem(item2)

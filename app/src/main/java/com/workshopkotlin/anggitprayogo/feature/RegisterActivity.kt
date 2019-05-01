@@ -45,7 +45,8 @@ class RegisterActivity : AppCompatActivity() {
             val userEntity = UserEntity(name = et_name.text.toString(), email = et_email.text.toString())
             val isSuccess = withContext(Dispatchers.Default) {
                 try {
-                    doRegister(userEntity)
+                    val idUser = doRegister(userEntity)
+                    SharedprefUtil.idUser = idUser
                     return@withContext true
                 } catch (e: SQLiteConstraintException) {
                     return@withContext false

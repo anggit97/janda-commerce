@@ -1,6 +1,5 @@
 package com.workshopkotlin.anggitprayogo.data.sharedpref
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 
@@ -15,6 +14,7 @@ class SharedprefUtil {
         private val isLogginKey = "isLogginKey"
         private val nameUserKey = "nameUser"
         private val emailUserKey = "emailUser"
+        private val idUserKey = "idUser"
 
         fun init(context: Context) {
             if (sharedPreferences == null) {
@@ -26,26 +26,32 @@ class SharedprefUtil {
         var isLoggin: Boolean?
             get() = sharedPreferences?.getBoolean(isLogginKey, false)
             set(value) {
-                value?.let { editor?.putBoolean(isLogginKey, it) }
+                value?.let { editor?.putBoolean(isLogginKey, it)?.apply() }
             }
 
         var nameUser: String?
             get() = sharedPreferences?.getString(nameUserKey, "")
             set(value) {
-                editor?.putString(nameUserKey, value)
+                editor?.putString(nameUserKey, value)?.apply()
             }
 
         var emailUser: String?
             get() = sharedPreferences?.getString(emailUserKey, "")
             set(value) {
-                editor?.putString(emailUserKey, value)
+                editor?.putString(emailUserKey, value)?.apply()
+            }
+
+        var idUser: Long?
+            get() = sharedPreferences?.getLong(idUserKey, 0)
+            set(value) {
+                value?.let { editor?.putLong(idUserKey, it)?.apply() }
             }
 
         fun clearSharedPref() {
             with(editor) {
-                this?.remove(isLogginKey)
-                this?.remove(nameUserKey)
-                this?.remove(emailUserKey)
+                this?.remove(isLogginKey)?.apply()
+                this?.remove(nameUserKey)?.apply()
+                this?.remove(emailUserKey)?.apply()
             }
         }
     }

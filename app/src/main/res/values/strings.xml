@@ -49,4 +49,10 @@
         mengantar Anak sekolah.
     </string>
     <string name="label_ok">OK</string>
+    <string name="label_cart">Barang dibeli</string>
+    <string name="label_cart_empty">Keranjang anda masuk kosong</string>
+    <string name="label_create_product">Tambahkan produk</string>
+    <string name="label_price">Harga</string>
+    <string name="label_name_product">Nama Product</string>
+    <string name="label_stock">Stok</string>
 </resources>

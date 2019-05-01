@@ -11,6 +11,6 @@ interface ProductDao {
     @Insert
     fun insertProduct(produk: ProductEntity)
 
-    @Query("SELECT * FROM produk")
-    fun getAllProducts() : List<ProductEntity>
+    @Query("SELECT * FROM produk WHERE id_user=:idUser")
+    fun getAllProductsByIdUser(idUser: Long) : MutableList<ProductEntity>
 }
