@@ -45,7 +45,10 @@ class ProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+    }
 
+    override fun onResume() {
+        super.onResume()
         getProductByUserId()
     }
 
@@ -55,6 +58,7 @@ class ProductFragment : Fragment() {
     }
 
     private fun getProductByUserId() {
+        productList.clear()
         val idUser = SharedprefUtil.idUser
         GlobalScope.launch(Dispatchers.Main) {
             val result = withContext(Dispatchers.Default) {
@@ -63,13 +67,13 @@ class ProductFragment : Fragment() {
                 }
             }
 
-            if (result?.size == 0){
+            if (result?.size == 0) {
                 rv_product.setGone()
                 rl_empty.setVisible()
-            }else{
+            } else {
                 rv_product.setVisible()
                 rl_empty.setGone()
-                productList = result!!
+                result?.let { productList.addAll(it) }
                 adapter.notifyDataSetChanged()
             }
         }
