@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.workshopkotlin.anggitprayogo.feature.CartFragment
 import com.workshopkotlin.anggitprayogo.feature.ProductFragment
+import com.workshopkotlin.anggitprayogo.feature.ProfileFragment
 
 class MainPagerAdapter(fm: FragmentManager, internal var context: Context) : FragmentPagerAdapter(fm) {
 
@@ -21,11 +22,15 @@ class MainPagerAdapter(fm: FragmentManager, internal var context: Context) : Fra
                 fragment = CartFragment()
                 return fragment
             }
+            2 ->{
+                fragment = ProfileFragment()
+                return  fragment
+            }
         }
         return fragment
     }
 
     override fun getCount(): Int {
-        return 2
+        return 3
     }
 }

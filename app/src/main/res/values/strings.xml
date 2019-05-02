@@ -56,4 +56,5 @@
     <string name="label_name_product">Nama Product</string>
     <string name="label_stock">Stok</string>
     <string name="label_desc_product">Deskripsi produk</string>
+    <string name="label_profile">Profil</string>
 </resources>

@@ -9,14 +9,24 @@ import com.workshopkotlin.anggitprayogo.R
 import com.workshopkotlin.anggitprayogo.data.entity.ProductEntity
 import kotlinx.android.synthetic.main.row_item_product.view.*
 
-class ProductAdapter(private val productList: MutableList<ProductEntity>): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(
+    private val productList: MutableList<ProductEntity>,
+    private val listener: ProductAdapterListener
+) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @SuppressLint("SetTextI18n")
-        fun bindViewHolder(productEntity: ProductEntity) {
-            with(itemView){
+        fun bindViewHolder(
+            productEntity: ProductEntity,
+            listener: ProductAdapterListener
+        ) {
+            with(itemView) {
                 tv_product_title.text = productEntity.namaProduk
                 tv_product_price.text = "Rp.".plus(productEntity.hargaProduk)
+            }
+
+            itemView.setOnClickListener {
+                listener.onClickItemProduct(productEntity)
             }
         }
     }
@@ -28,6 +38,6 @@ class ProductAdapter(private val productList: MutableList<ProductEntity>): Recyc
     override fun getItemCount(): Int = productList.size
 
     override fun onBindViewHolder(p0: ProductAdapter.ViewHolder, p1: Int) {
-        p0.bindViewHolder(productList[p1])
+        p0.bindViewHolder(productList[p1], listener)
     }
 }

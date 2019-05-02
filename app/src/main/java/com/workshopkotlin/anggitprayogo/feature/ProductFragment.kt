@@ -6,8 +6,10 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.workshopkotlin.anggitprayogo.Config
 import com.workshopkotlin.anggitprayogo.R
 import com.workshopkotlin.anggitprayogo.adapter.ProductAdapter
+import com.workshopkotlin.anggitprayogo.adapter.ProductAdapterListener
 import com.workshopkotlin.anggitprayogo.data.JandaDatabase
 import com.workshopkotlin.anggitprayogo.data.entity.ProductEntity
 import com.workshopkotlin.anggitprayogo.data.sharedpref.SharedprefUtil
@@ -19,16 +21,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.anko.support.v4.startActivity
 
 
-class ProductFragment : Fragment() {
+class ProductFragment : Fragment(), ProductAdapterListener {
 
     private val database: JandaDatabase by lazy {
         JandaDatabase(this.activity!!)
     }
 
     private val adapter: ProductAdapter by lazy {
-        ProductAdapter(productList)
+        ProductAdapter(productList, this)
     }
 
     private var productList: MutableList<ProductEntity> = mutableListOf()
@@ -77,5 +80,11 @@ class ProductFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    override fun onClickItemProduct(productEntity: ProductEntity) {
+        startActivity<DetailProductActivity>(
+            Config.ITEMS to productEntity
+        )
     }
 }

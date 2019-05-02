@@ -33,9 +33,11 @@ class MainActivity : AppCompatActivity() {
     private fun handleBottomNavigation() {
         val item1 = AHBottomNavigationItem("Produk", R.drawable.ic_add_white_24dp, R.color.colorPrimary)
         val item2 = AHBottomNavigationItem("Dibeli", R.drawable.ic_shopping_cart_black_24dp, R.color.colorPrimary)
+        val item3 = AHBottomNavigationItem("Profil", R.drawable.ic_account_circle_white_24dp, R.color.colorPrimary)
 
         bottom_navigation.addItem(item1)
         bottom_navigation.addItem(item2)
+        bottom_navigation.addItem(item3)
 
         // Set background color
         bottom_navigation.defaultBackgroundColor = Color.parseColor("#FEFEFE")
@@ -66,6 +68,7 @@ class MainActivity : AppCompatActivity() {
             when (position) {
                 0 -> view_pager.currentItem = position
                 1 -> view_pager.currentItem = position
+                2 -> view_pager.currentItem = position
             }
             true
         }

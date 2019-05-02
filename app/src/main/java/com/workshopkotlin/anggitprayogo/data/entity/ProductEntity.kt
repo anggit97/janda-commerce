@@ -3,8 +3,11 @@ package com.workshopkotlin.anggitprayogo.data.entity
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "produk")
+@Parcelize
 data class ProductEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_produk") var idProduk: Long = 0,
@@ -13,4 +16,4 @@ data class ProductEntity(
     @ColumnInfo(name = "harga_produk") var hargaProduk: String = "",
     @ColumnInfo(name = "stok_produk") var stokProduk: Int = 0,
     @ColumnInfo(name = "id_user") var idUser: Long = 0
-)
+) : Parcelable

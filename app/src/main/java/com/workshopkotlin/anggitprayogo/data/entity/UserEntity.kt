@@ -9,5 +9,6 @@ import android.arch.persistence.room.PrimaryKey
 data class UserEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id_user") var id: Long = 0,
     @ColumnInfo(name = "name") var name: String = "",
-    @ColumnInfo(name = "email") var email: String = ""
+    @ColumnInfo(name = "email") var email: String = "",
+    @ColumnInfo(name = "password") var password: String = ""
 )
