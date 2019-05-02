@@ -1,0 +1,10 @@
+package com.workshopkotlin.anggitprayogo.data.entity
+
+import android.arch.persistence.room.Embedded
+
+class ProductUserPurchase {
+    @Embedded
+    lateinit var productEntity: ProductEntity
+    @Embedded
+    lateinit var userEntity: UserEntity
+}

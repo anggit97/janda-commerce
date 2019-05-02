@@ -11,7 +11,7 @@ import com.workshopkotlin.anggitprayogo.R
 import com.workshopkotlin.anggitprayogo.adapter.ProductAdapter
 import com.workshopkotlin.anggitprayogo.adapter.ProductAdapterListener
 import com.workshopkotlin.anggitprayogo.data.JandaDatabase
-import com.workshopkotlin.anggitprayogo.data.entity.ProductEntity
+import com.workshopkotlin.anggitprayogo.data.entity.ProductUser
 import com.workshopkotlin.anggitprayogo.data.sharedpref.SharedprefUtil
 import com.workshopkotlin.anggitprayogo.utils.setGone
 import com.workshopkotlin.anggitprayogo.utils.setVisible
@@ -34,7 +34,7 @@ class ProductFragment : Fragment(), ProductAdapterListener {
         ProductAdapter(productList, this)
     }
 
-    private var productList: MutableList<ProductEntity> = mutableListOf()
+    private var productList: MutableList<ProductUser> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,26 +65,25 @@ class ProductFragment : Fragment(), ProductAdapterListener {
         val idUser = SharedprefUtil.idUser
         GlobalScope.launch(Dispatchers.Main) {
             val result = withContext(Dispatchers.Default) {
-                idUser?.let {
-                    database.productDao().getAllProductsByIdUser(it)
-                }
+                database.productDao().getAllProducts()
             }
 
-            if (result?.size == 0) {
+            if (result.size == 0) {
                 rv_product.setGone()
                 rl_empty.setVisible()
             } else {
                 rv_product.setVisible()
                 rl_empty.setGone()
-                result?.let { productList.addAll(it) }
+                result.let { productList.addAll(it) }
                 adapter.notifyDataSetChanged()
             }
         }
     }
 
-    override fun onClickItemProduct(productEntity: ProductEntity) {
+    override fun onClickItemProduct(productEntity: ProductUser) {
         startActivity<DetailProductActivity>(
-            Config.ITEMS to productEntity
+            Config.ITEMS to productEntity.productEntity,
+            Config.ITEMS2 to productEntity.userEntity
         )
     }
 }

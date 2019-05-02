@@ -46,10 +46,13 @@ class LoginActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main) {
             val isSuccess = withContext(Dispatchers.Default) {
                 try {
-                    doLoginAsync(user)
-//                    d("Result ", result.toString())
-//                    storeToSharedPref(result)
-                    return@withContext true
+                    val result = doLoginAsync(user)
+                    if (result.size > 0){
+                        storeToSharedPref(result[0])
+                        return@withContext true
+                    }else{
+                        return@withContext false
+                    }
                 } catch (e: SQLiteException) {
                     e.printStackTrace()
                     return@withContext false
@@ -72,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
         SharedprefUtil.idUser = result.id
     }
 
-    private fun doLoginAsync(user: UserEntity): UserEntity {
+    private fun doLoginAsync(user: UserEntity): MutableList<UserEntity> {
         return database.userDao().doLogin(user.email, user.password)
     }
 

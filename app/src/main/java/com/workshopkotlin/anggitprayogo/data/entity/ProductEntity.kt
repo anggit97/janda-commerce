@@ -1,12 +1,23 @@
 package com.workshopkotlin.anggitprayogo.data.entity
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
+import android.arch.persistence.room.ForeignKey.CASCADE
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-@Entity(tableName = "produk")
+@Entity(
+    tableName = "produk",
+    foreignKeys = [ForeignKey(
+        entity = UserEntity::class,
+        parentColumns = ["id_user"],
+        childColumns = ["id_owner"],
+        onDelete = CASCADE
+    )],
+    indices = [
+        Index(value = ["id_owner"]),
+        Index(value = ["id_produk"], unique = true)
+    ]
+)
 @Parcelize
 data class ProductEntity(
     @PrimaryKey(autoGenerate = true)
@@ -15,5 +26,5 @@ data class ProductEntity(
     @ColumnInfo(name = "deskripsi_produk") var deskpripsiProduk: String = "",
     @ColumnInfo(name = "harga_produk") var hargaProduk: String = "",
     @ColumnInfo(name = "stok_produk") var stokProduk: Int = 0,
-    @ColumnInfo(name = "id_user") var idUser: Long = 0
+    @ColumnInfo(name = "id_owner") var idUser: Long = 0
 ) : Parcelable

@@ -14,6 +14,6 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE id_user=:idUser")
     fun getUser(idUser: Int) : UserEntity
 
-    @Query("SELECT * FROM users WHERE email=:email AND password=:password")
-    fun doLogin(email: String, password: String) : UserEntity
+    @Query("SELECT * FROM users WHERE email=:email AND password=:password LIMIT 1")
+    fun doLogin(email: String, password: String) : MutableList<UserEntity>
 }

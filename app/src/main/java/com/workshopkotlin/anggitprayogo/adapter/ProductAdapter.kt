@@ -6,23 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.workshopkotlin.anggitprayogo.R
-import com.workshopkotlin.anggitprayogo.data.entity.ProductEntity
+import com.workshopkotlin.anggitprayogo.data.entity.ProductUser
 import kotlinx.android.synthetic.main.row_item_product.view.*
 
 class ProductAdapter(
-    private val productList: MutableList<ProductEntity>,
+    private val productList: MutableList<ProductUser>,
     private val listener: ProductAdapterListener
 ) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @SuppressLint("SetTextI18n")
         fun bindViewHolder(
-            productEntity: ProductEntity,
+            productEntity: ProductUser,
             listener: ProductAdapterListener
         ) {
             with(itemView) {
-                tv_product_title.text = productEntity.namaProduk
-                tv_product_price.text = "Rp.".plus(productEntity.hargaProduk)
+                tv_product_title.text = productEntity.productEntity.namaProduk
+                tv_product_price.text = "Rp.".plus(productEntity.productEntity.hargaProduk)
             }
 
             itemView.setOnClickListener {

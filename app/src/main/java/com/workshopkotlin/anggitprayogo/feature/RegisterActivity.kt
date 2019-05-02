@@ -42,7 +42,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun doRegisterProcess() {
         GlobalScope.launch(Dispatchers.Main) {
-            val userEntity = UserEntity(name = et_name.text.toString(), email = et_email.text.toString())
+            val userEntity = UserEntity(name = et_name.text.toString(), email = et_email.text.toString(), password = et_password.text.toString())
             val isSuccess = withContext(Dispatchers.Default) {
                 try {
                     val idUser = doRegister(userEntity)
