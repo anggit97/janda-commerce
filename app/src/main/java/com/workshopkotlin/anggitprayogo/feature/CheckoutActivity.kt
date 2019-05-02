@@ -38,11 +38,13 @@ class CheckoutActivity : AppCompatActivity() {
         btn_checkout.setOnClickListener {
             if (isValid()) {
                 val purchase = PurchaseEntity(
-                    idUser = SharedprefUtil.idUser,
-                    idProduct = items?.idProduk,
-                    shippingAddress = et_shipping_address.text.toString()
+                    SharedprefUtil.idUser,
+                    items?.idProduk,
+                    et_shipping_address.text.toString()
                 )
                 doProcessCheckout(purchase)
+                items
+                items
             }
         }
     }
@@ -54,6 +56,7 @@ class CheckoutActivity : AppCompatActivity() {
                     var result = doCheckoutAsync(purchase)
                     return@async true
                 } catch (e: Exception) {
+                    e.printStackTrace()
                     return@async false
                 }
             }.await()

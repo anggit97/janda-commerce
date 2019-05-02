@@ -44,11 +44,11 @@ class CreateProductActivity : AppCompatActivity() {
 
     private fun doAddProductProcess() {
         val product = ProductEntity(
-            namaProduk = et_name_prouct.text.toString(),
-            deskpripsiProduk = et_desc_product.text.toString(),
-            hargaProduk = et_price_product.text.toString(),
-            stokProduk = et_stock.text.toString().toInt(),
-            idUser = SharedprefUtil.idUser!!
+            et_name_prouct.text.toString(),
+            et_desc_product.text.toString(),
+            et_price_product.text.toString(),
+            et_stock.text.toString().toInt(),
+            SharedprefUtil.idUser!!
         )
 
         doAsycAddProduct(product)

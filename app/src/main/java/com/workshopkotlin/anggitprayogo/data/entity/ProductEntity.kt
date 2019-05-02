@@ -20,11 +20,13 @@ import kotlinx.android.parcel.Parcelize
 )
 @Parcelize
 data class ProductEntity(
+    @ColumnInfo(name = "nama_produk") var namaProduk: String? = null,
+    @ColumnInfo(name = "deskripsi_produk") var deskpripsiProduk: String? = null,
+    @ColumnInfo(name = "harga_produk") var hargaProduk: String? = null,
+    @ColumnInfo(name = "stok_produk") var stokProduk: Int? = null,
+    @ColumnInfo(name = "id_owner") var idUser: Long? = null
+) : Parcelable {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_produk") var idProduk: Long = 0,
-    @ColumnInfo(name = "nama_produk") var namaProduk: String = "",
-    @ColumnInfo(name = "deskripsi_produk") var deskpripsiProduk: String = "",
-    @ColumnInfo(name = "harga_produk") var hargaProduk: String = "",
-    @ColumnInfo(name = "stok_produk") var stokProduk: Int = 0,
-    @ColumnInfo(name = "id_owner") var idUser: Long = 0
-) : Parcelable
+    @ColumnInfo(name = "id_produk")
+    var idProduk: Long? = 0
+}

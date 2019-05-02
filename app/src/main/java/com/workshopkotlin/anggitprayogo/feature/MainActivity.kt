@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleBottomNavigation() {
-        val item1 = AHBottomNavigationItem("Produk", R.drawable.ic_add_white_24dp, R.color.colorPrimary)
+        val item1 = AHBottomNavigationItem("Produk", R.drawable.ic_apps_white_24dp, R.color.colorPrimary)
         val item2 = AHBottomNavigationItem("Dibeli", R.drawable.ic_shopping_cart_black_24dp, R.color.colorPrimary)
         val item3 = AHBottomNavigationItem("Profil", R.drawable.ic_account_circle_white_24dp, R.color.colorPrimary)
 

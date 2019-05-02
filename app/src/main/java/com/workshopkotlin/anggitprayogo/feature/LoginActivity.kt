@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun doLoginAsync(user: UserEntity): MutableList<UserEntity> {
-        return database.userDao().doLogin(user.email, user.password)
+        return database.userDao().doLogin(user.email!!, user.password!!)
     }
 
     private fun isValid(): Boolean {

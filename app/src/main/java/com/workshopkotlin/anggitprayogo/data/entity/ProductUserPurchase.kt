@@ -7,4 +7,6 @@ class ProductUserPurchase {
     lateinit var productEntity: ProductEntity
     @Embedded
     lateinit var userEntity: UserEntity
+    @Embedded
+    lateinit var purchaseEntity: PurchaseEntity
 }
