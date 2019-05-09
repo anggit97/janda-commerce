@@ -62,20 +62,21 @@ class ProductFragment : Fragment(), ProductAdapterListener {
 
     private fun getProductByUserId() {
         productList.clear()
-        val idUser = SharedprefUtil.idUser
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch {
             val result = withContext(Dispatchers.Default) {
                 database.productDao().getAllProducts()
             }
 
-            if (result.size == 0) {
-                rv_product.setGone()
-                rl_empty.setVisible()
-            } else {
-                rv_product.setVisible()
-                rl_empty.setGone()
-                result.let { productList.addAll(it) }
-                adapter.notifyDataSetChanged()
+            launch(Dispatchers.Main) {
+                if (result.size == 0) {
+                    rv_product.setGone()
+                    rl_empty.setVisible()
+                } else {
+                    rv_product.setVisible()
+                    rl_empty.setGone()
+                    result.let { productList.addAll(it) }
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
     }

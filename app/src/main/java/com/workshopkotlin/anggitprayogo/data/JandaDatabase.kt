@@ -32,6 +32,6 @@ abstract class JandaDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,
             JandaDatabase::class.java, "janda_database.db"
-        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration().setJournalMode(JournalMode.TRUNCATE).build()
     }
 }

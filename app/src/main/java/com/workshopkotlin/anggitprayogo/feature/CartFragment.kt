@@ -60,19 +60,21 @@ class CartFragment : Fragment() {
     }
 
     private fun getCartProcess() {
-        GlobalScope.launch (Dispatchers.Main){
+        GlobalScope.launch{
             val result = withContext(Dispatchers.Default) {
                 getChartAsync()
             }
 
-            if (result.size == 0){
-                rl_empty.setVisible()
-                rv_cart.setGone()
-            }else{
-                rl_empty.setGone()
-                rv_cart.setVisible()
-                cartList.addAll(result)
-                adapter.notifyDataSetChanged()
+            launch(Dispatchers.Main) {
+                if (result.size == 0){
+                    rl_empty.setVisible()
+                    rv_cart.setGone()
+                }else{
+                    rl_empty.setGone()
+                    rv_cart.setVisible()
+                    cartList.addAll(result)
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
     }

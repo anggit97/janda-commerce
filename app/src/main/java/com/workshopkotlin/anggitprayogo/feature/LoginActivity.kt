@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log.d
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
 import com.workshopkotlin.anggitprayogo.R
+import com.workshopkotlin.anggitprayogo.base.StatusCode
 import com.workshopkotlin.anggitprayogo.data.JandaDatabase
 import com.workshopkotlin.anggitprayogo.data.entity.UserEntity
 import com.workshopkotlin.anggitprayogo.data.sharedpref.SharedprefUtil
@@ -43,27 +44,36 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun doLoginProcess(user: UserEntity) {
-        GlobalScope.launch(Dispatchers.Main) {
-            val isSuccess = withContext(Dispatchers.Default) {
-                try {
+        GlobalScope.launch{
+            withContext(Dispatchers.Default) {
+                val resultValue: StatusCode
+                resultValue = try {
                     val result = doLoginAsync(user)
                     if (result.size > 0){
                         storeToSharedPref(result[0])
-                        return@withContext true
+                        StatusCode.STATUS_OK
                     }else{
-                        return@withContext false
+                       StatusCode.STATUS_UNAUTHORIZED
                     }
                 } catch (e: SQLiteException) {
                     e.printStackTrace()
-                    return@withContext false
+                    StatusCode.STATUS_UNAUTHORIZED
                 }
-            }
 
-            if (isSuccess) {
-                toast("Berhasil login")
-                startActivity(intentFor<MainActivity>().newTask().clearTask())
-            } else {
-                toast("Email dan password tidak sesuai")
+                launch(Dispatchers.Main) {
+                    when(resultValue){
+                        StatusCode.STATUS_OK -> {
+                            startActivity(intentFor<MainActivity>().newTask().clearTask())
+                            toast("Berhasil register")
+                        }
+                        StatusCode.STATUS_UNAUTHORIZED ->{
+                            toast("Email dan Password tidak cocok")
+                        }
+                        else -> {
+                            toast("Email dan Password tidak cocok")
+                        }
+                    }
+                }
             }
         }
     }

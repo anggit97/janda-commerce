@@ -14,8 +14,7 @@ import kotlinx.android.parcel.Parcelize
         onDelete = CASCADE
     )],
     indices = [
-        Index(value = ["id_owner"]),
-        Index(value = ["id_produk"], unique = true)
+        Index(value = ["id_owner"])
     ]
 )
 @Parcelize
@@ -28,5 +27,5 @@ data class ProductEntity(
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_produk")
-    var idProduk: Long? = 0
+    var idProduk: Long? = null
 }

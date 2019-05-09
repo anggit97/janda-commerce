@@ -43,17 +43,15 @@ class CheckoutActivity : AppCompatActivity() {
                     et_shipping_address.text.toString()
                 )
                 doProcessCheckout(purchase)
-                items
-                items
             }
         }
     }
 
     private fun doProcessCheckout(purchase: PurchaseEntity) {
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch {
             val isSuccess = async {
                 try {
-                    var result = doCheckoutAsync(purchase)
+                    doCheckoutAsync(purchase)
                     return@async true
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -61,11 +59,13 @@ class CheckoutActivity : AppCompatActivity() {
                 }
             }.await()
 
-            if (isSuccess) {
-                toast("Berhasil checkout")
-                startActivity(intentFor<MainActivity>().newTask().clearTask())
-            } else {
-                toast("Gagal checkout")
+            launch(Dispatchers.Main) {
+                if (isSuccess) {
+                    toast("Berhasil checkout")
+                    startActivity(intentFor<MainActivity>().newTask().clearTask())
+                } else {
+                    toast("Gagal checkout")
+                }
             }
         }
     }

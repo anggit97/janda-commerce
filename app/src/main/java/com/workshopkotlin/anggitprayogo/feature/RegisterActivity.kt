@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
 import com.workshopkotlin.anggitprayogo.R
+import com.workshopkotlin.anggitprayogo.base.StatusCode
 import com.workshopkotlin.anggitprayogo.data.JandaDatabase
 import com.workshopkotlin.anggitprayogo.data.entity.UserEntity
 import com.workshopkotlin.anggitprayogo.data.sharedpref.SharedprefUtil
@@ -41,24 +42,38 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun doRegisterProcess() {
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch {
             val userEntity = UserEntity(et_name.text.toString(), et_email.text.toString(), et_password.text.toString())
-            val isSuccess = withContext(Dispatchers.Default) {
-                try {
-                    val idUser = doRegister(userEntity)
-                    SharedprefUtil.idUser = idUser
-                    return@withContext true
-                } catch (e: SQLiteConstraintException) {
-                    return@withContext false
+            var statusCodeResult: StatusCode
+            try {
+                val idUser = doRegister(userEntity)
+                SharedprefUtil.idUser = idUser
+                statusCodeResult = if (idUser > 0){
+                    StatusCode.STATUS_OK
+                }else{
+                    StatusCode.STATUS_INVALID_INPUT
                 }
+            } catch (e: SQLiteConstraintException) {
+                statusCodeResult = StatusCode.STATUS_BAD_REQUEST
             }
 
-            if (isSuccess) {
-                storeDataUserLocally()
-                startActivity(intentFor<MainActivity>().newTask().clearTask())
-                toast("Berhasil mendaftar")
-            } else {
-                toast("Email sudah digunakan, silahkan gunakan email lain")
+            launch(Dispatchers.Main) {
+                when(statusCodeResult){
+                    StatusCode.STATUS_OK -> {
+                        storeDataUserLocally()
+                        startActivity(intentFor<MainActivity>().newTask().clearTask())
+                        toast("Berhasil register")
+                    }
+                    StatusCode.STATUS_BAD_REQUEST ->{
+                        toast("Email sudah digunakan")
+                    }
+                    StatusCode.STATUS_INVALID_INPUT ->{
+                        toast("Gagal register")
+                    }
+                    else -> {
+                        toast("Gagal register")
+                    }
+                }
             }
         }
     }
